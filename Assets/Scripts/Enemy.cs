@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour
         {
             health = value;
 
-            if(health <= 0){
+            if(health <= 0)
+            {
                 Defeated();
             }
         }
