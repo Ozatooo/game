@@ -1,0 +1,6 @@
+F:\Unity\Game\Temp\bin\Debug\Assembly-CSharp.dll
+F:\Unity\Game\Temp\bin\Debug\Assembly-CSharp.pdb
+F:\Unity\Game\obj\Debug\Assembly-CSharp.csproj.AssemblyReference.cache
+F:\Unity\Game\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+F:\Unity\Game\obj\Debug\Assembly-CSharp.dll
+F:\Unity\Game\obj\Debug\Assembly-CSharp.pdb
