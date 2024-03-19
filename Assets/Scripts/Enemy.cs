@@ -25,6 +25,14 @@ public class Enemy : MonoBehaviour
 
     public void Defeated()
     {
+        DropLoot();
         Destroy(gameObject);
+    }
+    public void DropLoot()
+    {
+        if (GetComponent<LootBag>() != null)
+        {
+            GetComponent<LootBag>().InstantiateLoot(transform.position);
+        }
     }
 }
