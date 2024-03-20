@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Loot : MonoBehaviour
 {
-    public int Value;
-    public int DropChance;
-    public Sprite LootSprite;
-    public string LootName;
+    public int Value { get; set; }
+    public int DropChance { get; set; }
+    public Sprite LootSprite { get; set; }
+    public string LootName { get; set; }
 
     public Loot(string lootName, int dropChance, int value)
     {

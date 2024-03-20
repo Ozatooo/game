@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LootBag : MonoBehaviour
@@ -13,6 +12,7 @@ public class LootBag : MonoBehaviour
     {
         if (LootPool?.Any() != true)
         {
+            Debug.Log("LootBag is either empty or null");
             return null;
         }
 
@@ -50,40 +50,27 @@ public class LootBag : MonoBehaviour
 
     private void GetPossibleNumberOfDrops(List<Loot> lootPool, out int result)
     {
-        result = 0;
-        if (lootPool?.Any() != true)
-        {
-            Debug.Log("Loot Bag is either null or empty");
-        }
-        else
-        {
-            result = Random.Range(0, lootPool.Count + 1);
-        }
+        result = Random.Range(0, lootPool.Count + 1);
     }
 
     private void GetTotalWeight(List<Loot> lootPool, out int result)
     {
         result = 0;
-        if (lootPool?.Any() != true)
+        foreach (Loot loot in lootPool)
         {
-            Debug.Log("Loot Bag is either null or empty");
-        }
-        else
-        {
-            foreach (Loot loot in lootPool)
-            {
-                result += loot.DropChance;
-            }
+            result += loot.DropChance;
         }
     }
 
     private GameObject CreateLootGameObejct(Loot loot, Vector3 spawnPosition)
     {
         GameObject lootGameObject = Instantiate(DroppedItemPrefab, spawnPosition, Quaternion.identity);
-        lootGameObject.GetComponent<SpriteRenderer>().sprite = loot.LootSprite;
-        lootGameObject.GetComponent<Loot>().LootName = loot.LootName;
-        lootGameObject.GetComponent<Loot>().Value = loot.Value;
-        lootGameObject.GetComponent<Loot>().DropChance = loot.DropChance;
+        Loot lootComp = lootGameObject.GetComponent<Loot>();
+
+        lootComp.GetComponent<SpriteRenderer>().sprite = loot.LootSprite;
+        lootComp.LootName = loot.LootName;
+        lootComp.Value = loot.Value;
+        lootComp.DropChance = loot.DropChance;
 
         return lootGameObject;
     }
