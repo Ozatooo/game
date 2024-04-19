@@ -9,10 +9,12 @@ public class Enemy : MonoBehaviour
     Transform target;
     Vector2 moveDirection;
     private EnemySpawner enemySpawner;
+    private KillCounter killCounter; // Reference to the KillCounter script
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        killCounter = FindObjectOfType<KillCounter>(); // Find the KillCounter script in the scene
     }
 
     private void Start()
@@ -30,6 +32,7 @@ public class Enemy : MonoBehaviour
             moveDirection = direction;
         }
     }
+
     private void FixedUpdate()
     {
         if (target)
@@ -44,7 +47,7 @@ public class Enemy : MonoBehaviour
         {
             health = value;
 
-            if(health <= 0)
+            if (health <= 0)
             {
                 Defeated();
             }
@@ -64,8 +67,15 @@ public class Enemy : MonoBehaviour
         {
             enemySpawner.EnemyDefeated();
         }
+
+        if (killCounter != null) // Increment kill count if KillCounter script is found
+        {
+            killCounter.IncrementKillCount();
+        }
+
         Destroy(gameObject);
     }
+
     public void DropLoot()
     {
         if (GetComponent<LootBag>() != null)
