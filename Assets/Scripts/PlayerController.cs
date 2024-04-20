@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,32 @@ public class PlayerController : MonoBehaviour
     public static int EnemyCounter = 1;
     public static int maxEnemiesOnMap = 3;
     public static int enemyKilled = 0;
+
+    [SerializeField]
+    int currentHealth, maxHealth,
+        currentExperience, maxExperience,
+        currentLevel;
+
+    private void Awake()
+    {
+        // Ensure ExperienceManager.Instance is properly assigned
+        ExperienceManager.Instance = FindObjectOfType<ExperienceManager>();
+        if (ExperienceManager.Instance == null)
+        {
+            Debug.LogError("ExperienceManager instance not found!");
+        }
+    }
+
+    private void OnEnable()
+    {
+            ExperienceManager.Instance.OnExperienceChange += HandleExperienceChange;
+    }
+
+    private void OnDisable()
+    {
+            ExperienceManager.Instance.OnExperienceChange -= HandleExperienceChange;
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -25,6 +52,25 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void HandleExperienceChange(int newExperience)
+    {
+        currentExperience += newExperience;
+        if (currentExperience >= maxExperience)
+        {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        maxHealth += 10;
+        currentHealth = maxHealth;
+
+        currentLevel++;
+
+        currentExperience = 0;
+        maxExperience += 100;
+    }
     private void FixedUpdate()
     {
         if (canMove)
